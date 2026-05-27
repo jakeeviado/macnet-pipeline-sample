@@ -26,7 +26,7 @@ jobs:
             - name: Collect Training Data
               if: always()
               run: |
-                  ./sentinel scan --path ./training-sets/ai --verbose --collect --label ai
+                  ./sentinel scan --path ./training-sets/ai --verbose --collect --label flagged
                   ./sentinel scan --path ./training-sets/human --verbose --collect --label human
 
             - name: Upload Training Data Artifact
