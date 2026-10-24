@@ -1,0 +1,21 @@
+name: MACnet PR Validation
+
+on:
+    pull_request:
+        branches: [master]
+
+jobs:
+    macnet:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+              with:
+                  fetch-depth: 0
+
+            - name: Download MACnet
+              run: |
+                  curl -L https://github.com/jakeeviado/macnet/actions/runs/40102279640/artifacts/12563586132 -o macnet
+                  chmod +x macnet
+
+            - name: Scan PR Code (Enforcement)
+              run: ./macnet scan --git-diff origin/master --verbose
