@@ -1,0 +1,31 @@
+name: MACnet PR Validation
+
+on:
+    pull_request:
+        branches: [master]
+
+jobs:
+    macnet:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+
+            - name: Download MACnet artifact
+              uses: actions/download-artifact@v4
+              with:
+                  name: macnet-linux-amd64
+                  run-id: 40102279640
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  repository: jakeeviado/macnet
+                  path: .
+                  merge-multiple: true
+
+            - name: Make executable
+              run: chmod +x macnet-linux-amd64
+
+            - name: Scan PR Code (Enforcement)
+              run: |
+                      ./macnet-linux-amd64 scan --git-diff origin/master --verbose
+                      ./macnet-linux-amd64 scan --path .
