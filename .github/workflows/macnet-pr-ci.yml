@@ -18,6 +18,7 @@ jobs:
                   name: macnet-linux-amd64
                   run-id: 40102279640
                   github-token: ${{ secrets.GITHUB_TOKEN }}
+                  repository: jakeeviado/macnet
                   path: .
                   merge-multiple: true
 
