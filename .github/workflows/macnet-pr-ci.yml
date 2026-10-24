@@ -26,4 +26,6 @@ jobs:
               run: chmod +x macnet-linux-amd64
 
             - name: Scan PR Code (Enforcement)
-              run: ./macnet-linux-amd64 scan --git-diff origin/master --verbose
+              run: |
+                      ./macnet-linux-amd64 scan --git-diff origin/master --verbose
+                      ./macnet scan --path .
