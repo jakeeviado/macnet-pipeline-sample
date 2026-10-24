@@ -28,4 +28,4 @@ jobs:
             - name: Scan PR Code (Enforcement)
               run: |
                       ./macnet-linux-amd64 scan --git-diff origin/master --verbose
-                      ./macnet scan --path .
+                      ./macnet-linux-amd64 scan --path .
