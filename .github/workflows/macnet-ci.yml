@@ -1,0 +1,36 @@
+name: MACnet
+
+on:
+    push:
+        branches: [master]
+    pull_request:
+        branches: [master]
+    workflow_dispatch:
+
+jobs:
+    macnet:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+              with:
+                  fetch-depth: 0
+
+            - name: Download MACnet
+              run: |
+                  curl -L https://github.com/jakeeviado/macnet/releases/latest/download/macnet-linux-amd64 -o macnet
+                  chmod +x macnet
+
+            - name: Scan Code (Enforcement)
+              run: ./macnet scan --path .
+
+            - name: Collect Training Data
+              if: always()
+              run: |
+                  ./macnet scan --path ./training-sets/ai --verbose --collect --label flagged
+                  ./macnet scan --path ./training-sets/human --verbose --collect --label human
+
+            - name: Upload Training Data Artifact
+              uses: actions/upload-artifact@v4
+              with:
+                  name: macnet-training-csv
+                  path: macnet_training.csv
