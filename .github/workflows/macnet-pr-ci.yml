@@ -8,14 +8,21 @@ jobs:
     macnet:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
               with:
                   fetch-depth: 0
 
-            - name: Download MACnet
-              run: |
-                  curl -L https://github.com/jakeeviado/macnet/actions/runs/40102279640/artifacts/12563586132 -o macnet
-                  chmod +x macnet
+            - name: Download MACnet artifact
+              uses: actions/download-artifact@v4
+              with:
+                  name: macnet-linux-amd64
+                  run-id: 40102279640
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  path: .
+                  merge-multiple: true
+
+            - name: Make executable
+              run: chmod +x macnet-linux-amd64
 
             - name: Scan PR Code (Enforcement)
-              run: ./macnet scan --git-diff origin/master --verbose
+              run: ./macnet-linux-amd64 scan --git-diff origin/master --verbose
