@@ -15,7 +15,7 @@ jobs:
 
             - name: Download MACnet
               run: |
-                  curl -L https://github.com/jakeeviado/macnet/actions/runs/40102279640/artifacts/12563586132 -o macnet
+                  curl -L https://github.com/jakeeviado/macnet/releases/latest/download/macnet-linux-amd64 -o macnet
                   chmod +x macnet
 
             - name: Scan Code (Enforcement)
